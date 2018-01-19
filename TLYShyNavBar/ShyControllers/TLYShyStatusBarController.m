@@ -20,10 +20,12 @@ static inline CGFloat AACStatusBarHeight(UIViewController *viewController)
     }
     
     // Modal views do not overlap the status bar, so no allowance need be made for it
-    if (viewController.presentingViewController != nil)
-    {
-        return 0.f;
-    }
+    // UB-RWIL: Remove these lines of codes to fix jumping statusbar
+    // Github issue: https://github.com/telly/TLYShyNavBar/issues/184
+//    if (viewController.presentingViewController != nil)
+//    {
+//        return 0.f;
+//    }
 
     CGSize  statusBarSize = [UIApplication sharedApplication].statusBarFrame.size;
     CGFloat statusBarHeight = MIN(statusBarSize.width, statusBarSize.height);
